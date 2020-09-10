@@ -1,0 +1,41 @@
+h1.title= title
+
+    form(method="POST", action="")
+        div 
+            label(for='first_name') First Name:
+            br
+            input(type='text', placeholder='First Name' name='first_name' required='true')
+            br
+        div 
+            label(for='last_name') Last Name:
+            br
+            input(type='text', placeholder='Last Name' name='last_name' required='true')
+            br
+        div 
+            label(for='email') Email (used to signin):
+            br
+            input(type='text', placeholder='email' name='email' required='true')
+            br
+        div 
+            label(for='password') Password:
+            br
+            input(type='text', placeholder='Password' name='password' required='true')
+            br
+        div 
+            label(for='confirmPassword') Confirm Password:
+            br
+            input(type='text', placeholder='Confirm Password' name='confirmPassword' required='true')
+            br
+        br
+        div 
+            label(for='bio') Bio:
+            br
+            input(type='textarea', placeholder='bio' name='bio' required='false')
+            br
+        br
+        button(type='submit') Sign up
+
+    if errors
+        ul
+            for error in errors
+                li!= error.msg

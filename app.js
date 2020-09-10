@@ -40,7 +40,7 @@ app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
+  
 passport.use(
   new LocalStrategy({
     usernameField: "email",

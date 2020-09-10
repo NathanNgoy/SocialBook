@@ -1,0 +1,23 @@
+h1(class="text-center")= title
+
+	if currentUser
+		p You are logged in as a #{currentUser.username}
+		hr
+		a(href='/create-message') Create a new message
+		hr
+		a(href='/log-out') Log out
+	else
+		br
+		form(method='POST', action='' class="form-signin")
+			div(class= "form-label-group")
+				input(class="form-control" type='text' placeholder='email' name='email' required='true' )
+			br
+			div(class= "form-label-group")
+				input(class="form-control" type='password' placeholder='password' name='password' required='true' )
+			br
+			div(class="col text-center")
+				button.btn.btn-primary(type='submit') Login
+		br
+		div(class="col text-center")
+			| Not registered yet? 
+			a(href='/signup') Sign Up

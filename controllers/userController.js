@@ -10,6 +10,7 @@ exports.sign_up_get = function(req, res) {
 }
 
 exports.sign_up_post = [
+
     expressValidator.body('first_name', 'First name must not be empty.').trim().isLength({ min: 1 }),
     expressValidator.body('last_name', 'Last name must not be empty.').trim().isLength({ min: 1 }),
     expressValidator.body('email', 'Email must not be empty.').trim().isLength({ min: 1 }),
@@ -26,16 +27,12 @@ exports.sign_up_post = [
             if (err) {return next(err)}
             const errors = expressValidator.validationResult(req);
 
-            if (req.body.admin === "admin"){
-                makeAdmin = true;
-            }
-
             const user = new User({
                 firstName: req.body.first_name,
                 lastName: req.body.last_name,
                 email: req.body.email,
                 password: hashedPassword,
-                bio: bio
+                bio: req.body.bio
             })
             if (!errors.isEmpty()) {
                 res.render('signup', {errors: errors.array()});
@@ -55,7 +52,7 @@ exports.sign_up_post = [
 ];
 
 exports.login_get = function(req, res) {
-    res.render("login", {title: login});
+    res.render("login", {title: "login"});
 }
 
 exports.login_post = passport.authenticate("local", {
@@ -67,4 +64,5 @@ exports.logout_get = function(req, res){
     req.logout();
     res.redirect("/home");
 }
+
 
