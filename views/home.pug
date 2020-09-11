@@ -2,6 +2,17 @@ h1 back to the homepage!
 
 if currentUser
     h2 You're login as #{currentUser.fullName}
+else
+    h2 You're not login yet.
+    a(href='/login') Login
+
+form(method="POST", action="/search")
+    div 
+    label(for='searchContent') Search:
+    br
+    input(type='text', placeholder='Search for a name' name='searchContent' required='true')
+    br
+    button(type='submit' formaction='/search') Search
 
 form(method="POST", action="/posts")
         div 
@@ -10,6 +21,12 @@ form(method="POST", action="/posts")
             input(type='text', placeholder='What is on your mind' name='postContent' required='true')
             br
         button(type='submit' formaction='/posts') Post
+
+each post in all_posts
+    p= post.content
+    p= post.author.fullName
+    p= post.likes
+    p= post.date
 
 if errors
     ul

@@ -4,6 +4,7 @@ var async = require('async');
 const bcrypt = require("bcryptjs");
 const { insertMany } = require("../models/user");
 const passport = require("passport");
+const Post = require("../models/post");
 
 exports.sign_up_get = function(req, res) {
     res.render("signup", { title: "Sign up"});
@@ -65,4 +66,18 @@ exports.logout_get = function(req, res){
     res.redirect("/home");
 }
 
-
+exports.get_profile = function(req, res){
+    async.parallel({
+        user: function(callback){
+            User.findById(req.params.id).exec(callback)
+        },
+        postsOfUser: function(callback){
+            Post.find({ "author": req.params.id}).populate('author').exec(callback);
+        }
+    }, function (err, results) {
+        if(err) {
+            return next(err);
+        }
+        res.render("profile", { user: results.user, postsOfUser: results.postsOfUser})
+    })
+}
