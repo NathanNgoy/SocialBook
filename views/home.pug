@@ -1,34 +1,32 @@
-h1 back to the homepage!
+extends layout
 
-if currentUser
-    h2 You're login as #{currentUser.fullName}
-else
-    h2 You're not login yet.
-    a(href='/login') Login
+block content
 
-form(method="POST", action="/search")
-    div 
-    label(for='searchContent') Search:
-    br
-    input(type='text', placeholder='Search for a name' name='searchContent' required='true')
-    br
-    button(type='submit' formaction='/search') Search
+    if currentUser
+        br
+        h2 You're login as #{currentUser.fullName}
 
-form(method="POST", action="/posts")
-        div 
-            label(for='postContent') Write a post:
-            br
-            input(type='text', placeholder='What is on your mind' name='postContent' required='true')
-            br
-        button(type='submit' formaction='/posts') Post
+        form(method="POST", action="/posts" id="status")
+            div 
+                label(for='postContent') Write a post:
+                br
+                textarea(id="postbox", placeholder='What is on your mind' name='postContent' required='true')
+                br
+            button(type='submit' formaction='/posts') Post
 
-each post in all_posts
-    p= post.content
-    p= post.author.fullName
-    p= post.likes
-    p= post.date
+        each post in all_posts
+            p= post.content
+            p= post.author.fullName
+            p= post.likes
+            p= post.date
+            
+    else
+        h2 You're not login yet.
+        a(href='/login') Login
 
-if errors
-    ul
-        for error in errors
-            li!= error.msg
+
+
+    if errors
+        ul
+            for error in errors
+                li!= error.msg

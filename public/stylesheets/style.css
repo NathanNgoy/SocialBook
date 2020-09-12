@@ -6,3 +6,27 @@ body {
 a {
   color: #00B7FF;
 }
+
+#search {
+  width: 400px;
+}
+
+textarea {
+  height: auto;
+}
+
+#status {
+  margin: 0 auto;
+  width:250px;
+  text-align: center;
+}
+
+#postbox {
+  height: 80px;
+	width: 100%;
+}
+
+.profile {
+  border-radius: 50%;
+  z-index: 1000;
+}

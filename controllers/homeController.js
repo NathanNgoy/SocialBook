@@ -3,11 +3,15 @@ var Post = require("../models/post");
 const expressValidator = require("express-validator");
 var async = require('async');
 
+exports.get_redirect = function(req, res) {
+    res.redirect('/home');
+}
+
 exports.get_post_list = function(req, res) {
     async.parallel({
         post_count: function(callback){
             Post.find({}, callback).populate("author");
-        }
+        },
     }, function(err, results) {
         res.render('home', { error: err, all_posts: results.post_count, currentUser: req.user });
     });

@@ -1,6 +1,18 @@
-p= user.firstName
-p= user.lastName
+extends layout
 
-p Posts:
-for post in postsOfUser
-    p= post.content
+block content
+
+    br
+
+    <main role="main" class="container">
+            div(class="bar d-flex align-items-center p-3 my-3 text-white-50 bg-dark rounded shadow-sm")
+                img(class="mr-3 profile" src="/images/profile.jpg" alt="", width="50", height="50")
+                div(class="lh-100")
+                    h6(class="mb-0 text-white lh-100")= user.fullName
+                    small= user.bio
+
+    p(class= "text-info bold")= user.fullName
+
+    p Posts:
+    for post in postsOfUser
+        p= post.content

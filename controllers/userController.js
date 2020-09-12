@@ -53,7 +53,7 @@ exports.sign_up_post = [
 ];
 
 exports.login_get = function(req, res) {
-    res.render("login", {title: "login"});
+    res.render("login", {title: "Login"});
 }
 
 exports.login_post = passport.authenticate("local", {
@@ -63,7 +63,7 @@ exports.login_post = passport.authenticate("local", {
 
 exports.logout_get = function(req, res){
     req.logout();
-    res.redirect("/home");
+    res.redirect("/login");
 }
 
 exports.get_profile = function(req, res){

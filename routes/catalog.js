@@ -34,12 +34,12 @@ router.get('/users/:id', user_controller.get_profile);
 
 // home page //
 
+router.get('/home', home_controller.get_post_list);
+
 router.post('/posts', post_controller.post_create_post);
 
 router.post('/search', home_controller.search_list);
 
-router.get('/home', home_controller.get_post_list);
-
-
+router.get('/', home_controller.get_redirect);
 
 module.exports = router;
