@@ -11,8 +11,46 @@ block content
                     h6(class="mb-0 text-white lh-100")= user.fullName
                     small= user.bio
 
-    p(class= "text-info bold")= user.fullName
+    if currentUser
+        form(method="POST", action="/posts" id="status")
+            div 
+                label(for='postContent') Write a post:
+                br
+                textarea(id="postbox", placeholder='What is on your mind' name='postContent' required='true')
+                br
+            button(type='submit' formaction='/posts') Post
+
+
+    <h2 class="mt-4">Two columns with two nested columns</h2>
+    <p>Per the documentation, nesting is easy—just put a row of columns within an existing column. This gives you two columns <strong>starting at desktops and scaling to large desktops</strong>, with another two (equal widths) within the larger column.</p>
+    <p>At mobile device sizes, tablets and down, these columns and their nested columns will stack.</p>
+    
 
     p Posts:
     for post in postsOfUser
-        p= post.content
+        div(class="my-3 p-3 bg-white rounded shadow-sm")
+            div(class="media text-muted pt-3 border-bottom border-gray")
+                img(class="bd-placeholder-img mr-2 rounded" width="32" height="32" src="/images/profile.jpg")
+                p(class="media-body pb-3 mb-0 small lh-125")
+                    strong(class="d-block text-gray-dark")= post.author.fullName
+                    Donec= post.dateFormat
+
+            br        
+            h6(class="pb-2 mb-0")= post.content
+
+            small(class="d-block text-right mt-3")
+                a(href="#") Comment
+
+
+    div(class="row mb-3")
+        <div class="col-md-8 themed-grid-col"> .col-md-8
+            <div class="pb-3">
+                .col-md-8
+            </div>
+            <div class="row">
+                <div class="col-md-6 themed-grid-col">.col-md-6</div>
+                <div class="col-md-6 themed-grid-col">.col-md-6</div>
+            </div>
+        </div>
+        <div class="col-md-4 themed-grid-col">.col-md-4</div>
+    </div>

@@ -78,6 +78,6 @@ exports.get_profile = function(req, res){
         if(err) {
             return next(err);
         }
-        res.render("profile", { user: results.user, postsOfUser: results.postsOfUser})
+        res.render("profile", { user: results.user, postsOfUser: results.postsOfUser, currentUser: req.user})
     })
 }

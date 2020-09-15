@@ -4,7 +4,12 @@ block content
 
     if currentUser
         br
-        h2 You're login as #{currentUser.fullName}
+        <main role="main" class="container">
+            div(class="bar d-flex align-items-center p-3 my-3 text-white-50 bg-dark rounded shadow-sm")
+                img(class="mr-3 profile" src="/images/profile.jpg" alt="", width="50", height="50")
+                div(class="lh-100")
+                    h6(class="mb-0 text-white lh-100")= currentUser.fullName
+                    small= currentUser.bio
 
         form(method="POST", action="/posts" id="status")
             div 
@@ -15,10 +20,18 @@ block content
             button(type='submit' formaction='/posts') Post
 
         each post in all_posts
-            p= post.content
-            p= post.author.fullName
-            p= post.likes
-            p= post.date
+            div(class="my-3 p-3 bg-white rounded shadow-sm")
+                div(class="media text-muted pt-3 border-bottom border-gray")
+                    img(class="bd-placeholder-img mr-2 rounded" width="32" height="32" src="/images/profile.jpg")
+                    p(class="media-body pb-3 mb-0 small lh-125")
+                        strong(class="d-block text-gray-dark")= post.author.fullName
+                        Donec= post.dateFormat
+
+                br        
+                h6(class="pb-2 mb-0")= post.content
+
+                small(class="d-block text-right mt-3")
+                    a(href="#") Comment
             
     else
         h2 You're not login yet.
