@@ -24,7 +24,7 @@ block content
                 div(class="media text-muted pt-3 border-bottom border-gray")
                     img(class="bd-placeholder-img mr-2 rounded" width="32" height="32" src="/images/profile.jpg")
                     p(class="media-body pb-3 mb-0 small lh-125")
-                        strong(class="d-block text-gray-dark")= post.author.fullName
+                        a(href= post.author.url class=" strong d-block text-gray-dark")= post.author.fullName
                         Donec= post.dateFormat
 
                 br        

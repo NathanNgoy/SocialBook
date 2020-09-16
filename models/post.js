@@ -17,4 +17,10 @@ PostSchema
     return moment(this.date).format('Do of MMM \'YY, h:mm A');
 });
 
+PostSchema
+.virtual("url")
+.get(function() {
+    return '/posts/' + this._id;
+})
+
 module.exports = mongoose.model("Post", PostSchema);

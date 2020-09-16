@@ -5,6 +5,7 @@ const bcrypt = require("bcryptjs");
 const { insertMany } = require("../models/user");
 const passport = require("passport");
 const Post = require("../models/post");
+const friendRequest = require("..//models/friendrequest");
 
 exports.sign_up_get = function(req, res) {
     res.render("signup", { title: "Sign up"});
@@ -69,7 +70,7 @@ exports.logout_get = function(req, res){
 exports.get_profile = function(req, res){
     async.parallel({
         user: function(callback){
-            User.findById(req.params.id).exec(callback)
+            User.findById(req.params.id).exec(callback);
         },
         postsOfUser: function(callback){
             Post.find({ "author": req.params.id}).populate('author').exec(callback);
@@ -80,4 +81,26 @@ exports.get_profile = function(req, res){
         }
         res.render("profile", { user: results.user, postsOfUser: results.postsOfUser, currentUser: req.user})
     })
+}
+
+exports.friendrequest_post = function(req, res, next){
+    async.parallel({
+        reciever: function(callback){
+            User.findById(req.params.id1).exec(callback);
+        },
+        sender: function(callback){
+            User.findById(req.params.id2).exec(callback);
+        }
+    }, function(err, results) {
+        if(err) { return next(err); }
+
+        const friendship = new friendRequest({
+            from: results.sender,
+            to: results.reciever
+        }).save((err) => {
+            if(err) return next(err);
+        })
+        return res.redirect("/home");
+    })
+    
 }

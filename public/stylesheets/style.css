@@ -3,8 +3,12 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
+a:link {
+  color: #696969;
+}
+
 a {
-  color: #00B7FF;
+  color: #696969;
 }
 
 #search {

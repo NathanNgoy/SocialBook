@@ -1,5 +1,7 @@
 var User = require("../models/user");
 var Post = require("../models/post");
+var friendRequest = require("../models/friendrequest");
+
 const expressValidator = require("express-validator");
 var async = require('async');
 
@@ -24,6 +26,23 @@ exports.search_list = function(req, res){
         }
     }, function(err, results) {
         console.log(results);
-        res.render('search_list', {error: err, friend_list: results.search_lists})
+        res.render('search_list', {error: err, search_list: results.search_lists})
+    })
+}
+
+exports.get_friend_list = function(req, res){
+    async.parallel({
+        friend_request_list: function(callback){
+            friendRequest.find({"to": req.params.id}).populate('from').exec(callback);
+        },
+        friend_lists: function(callback){
+            User.findById(req.params.id).select("Friends").exec(callback);
+        }
+    }, function(err, results) {
+        console.log(results);
+        res.render("friend", {currentUser: req.user, 
+            error: err, 
+            friend_requests: results.friend_request_list, 
+            friend_list: results.friend_lists});
     })
 }

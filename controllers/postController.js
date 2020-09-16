@@ -37,5 +37,17 @@ exports.post_create_post = [
 // POST edit
 
 // POST delete
+exports.post_delete_post = function (req, res, next){
+    Post.findById(req.params.id).exec(function(err, message) {
+        console.log("part 1");
+        if (err) { return next(err); }
+        Post.findByIdAndRemove(req.params.id, function deleteMessage(err) {
+            console.log("part 2");
+            if (err) { return next(err); }
+            console.log("success");
+            res.redirect("/home");
+        })
+    })
+}
 
 // POST like

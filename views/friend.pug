@@ -1,0 +1,15 @@
+extends layout
+
+block content
+
+    br
+    
+    p Friend request from
+
+    for friend_request in friend_requests
+        a(href="/users/"+ friend_request.from._id)= friend_request.from.fullName
+
+    if errors
+        ul
+            for error in errors
+                li!= error.msg

@@ -16,8 +16,6 @@ var home_controller = require('../controllers/homeController');
 
 //router.post('/message/create', blog_controller.messsage_create_post);
 
-//router.post('/message/:id/delete', blog_controller.message_delete_post);
-
 /// USER ROUTERS ///
 
 router.get('/signup', user_controller.sign_up_get);
@@ -38,8 +36,14 @@ router.get('/home', home_controller.get_post_list);
 
 router.post('/posts', post_controller.post_create_post);
 
+router.post('/posts/:id/delete', post_controller.post_delete_post);
+
 router.post('/search', home_controller.search_list);
 
 router.get('/', home_controller.get_redirect);
+
+router.post('/users/:id1/friendrequest/:id2', user_controller.friendrequest_post);
+
+router.get('/users/:id/friends', home_controller.get_friend_list);
 
 module.exports = router;

@@ -12,13 +12,19 @@ block content
                     small= user.bio
 
     if currentUser
-        form(method="POST", action="/posts" id="status")
-            div 
-                label(for='postContent') Write a post:
-                br
-                textarea(id="postbox", placeholder='What is on your mind' name='postContent' required='true')
-                br
-            button(type='submit' formaction='/posts') Post
+        if currentUser._id.equals(user._id)
+            form(method="POST", action="/posts" id="status")
+                div 
+                    label(for='postContent') Write a post:
+                    br
+                    textarea(id="postbox", placeholder='What is on your mind' name='postContent' required='true')
+                    br
+                button(type='submit' formaction='/posts') Post
+        else
+            form(method="POST", action='/users/'+ user._id +'/friendrequest/' + currentUser._id id="status")
+                div 
+                    label(for='friend') Send a friend request:
+                button(type='submit' formaction='/users/'+ user._id +'/friendrequest/' + currentUser._id) add Friend
 
 
     <h2 class="mt-4">Two columns with two nested columns</h2>
@@ -32,14 +38,17 @@ block content
             div(class="media text-muted pt-3 border-bottom border-gray")
                 img(class="bd-placeholder-img mr-2 rounded" width="32" height="32" src="/images/profile.jpg")
                 p(class="media-body pb-3 mb-0 small lh-125")
-                    strong(class="d-block text-gray-dark")= post.author.fullName
+                    a(href= post.author.url class="strong d-block text-gray-dark")= post.author.fullName
                     Donec= post.dateFormat
+                small(class="d-block text-right mt-3")
+                    a(href= post.url+"/delete") Delete post
 
             br        
             h6(class="pb-2 mb-0")= post.content
 
             small(class="d-block text-right mt-3")
                 a(href="#") Comment
+            
 
 
     div(class="row mb-3")
