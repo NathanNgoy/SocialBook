@@ -104,3 +104,30 @@ exports.friendrequest_post = function(req, res, next){
     })
     
 }
+
+//id1 - sender, id2 - reciever
+exports.friendrequest_accept = function(req, res, next){
+    friendRequest.findOneAndUpdate({"status": "Pending", "from": req.params.id1, "to": req.params.id2}, {"status": "Accepted"}
+    ).then((frreq) => {
+        User.findByIdAndUpdate(req.params.id1, {$push: { friends: req.params.id2 }}).then((sender) => {
+            User.findByIdAndUpdate(req.params.id2, {$push: { friends: req.params.id1 }}).then((reciever) => {
+                res.status(200).json({ message: "Friends request accepted."});
+            })
+            .catch((err) => {
+                next(err)
+            });
+        })
+    })
+    res.redirect("/users/" + req.params.id2 + "/friends")
+}
+
+exports.friendrequest_decline = function(req, res, next){
+    friendRequest.findOneAndDelete({"status": "Pending", "from": req.params.id1, "to": req.params.id2})
+        .then((declinedReq) => {
+            res.status(200).json({ message: "Friend request declined."})
+        })
+        .catch((err) => {
+            next(err);
+        })
+    res.redirect("/users/" + req.params.id2 + "/friends")
+}

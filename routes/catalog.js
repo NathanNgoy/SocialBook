@@ -44,6 +44,11 @@ router.get('/', home_controller.get_redirect);
 
 router.post('/users/:id1/friendrequest/:id2', user_controller.friendrequest_post);
 
+//id1 -> sender, id2 -> reciever
+router.post('/users/:id1/friendrequest/:id2/accept', user_controller.friendrequest_accept);
+
+router.post('/users/:id1/friendrequest/:id2/decline', user_controller.friendrequest_decline);
+
 router.get('/users/:id/friends', home_controller.get_friend_list);
 
 module.exports = router;

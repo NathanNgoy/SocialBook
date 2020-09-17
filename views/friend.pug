@@ -4,11 +4,37 @@ block content
 
     br
     
-    p Friend request from
 
-    for friend_request in friend_requests
-        a(href="/users/"+ friend_request.from._id)= friend_request.from.fullName
+    div(class="my-3 p-3 bg-white rounded shadow-sm")
+        h6(class="border-bottom border-gray pb-2 mb-0") Friend Requests
+        for friend_request in friend_requests
+            div(class="my-3 p-3 bg-white rounded shadow-sm")
+                div(class="media text-muted pt-3 border-gray")
+                    img(class="bd-placeholder-img mr-2 rounded" width="50" height="50" src="/images/profile.jpg")
+                    p(class="media-body pb-3 mb-0 small lh-125")
+                        a(href="/users/"+ friend_request.from._id)= friend_request.from.fullName
+                        br
+                        Donec= friend_request.from.bio
+                        
+                        form(method="POST", action='' id="status")
+                            button(class="btn btn-primary" type='submit' formaction="/users/" + friend_request.from._id + "/friendrequest/" + friend_request.to._id + "/accept") Accept
+                        form(method="POST", action='' id="status")
+                            button(class="btn btn-secondary" type='submit' formaction="/users/" + friend_request.from._id + "/friendrequest/" + friend_request.to._id + "/decline") Decline
 
+
+    
+    div(class="my-3 p-3 bg-white rounded shadow-sm")
+        h6(class="border-bottom border-gray pb-2 mb-0") Friends
+        for friend in friend_list
+            div(class="my-3 p-3 bg-white rounded shadow-sm")
+                div(class="media text-muted pt-3 border-gray")
+                    img(class="bd-placeholder-img mr-2 rounded" width="32" height="32" src="/images/profile.jpg")
+                    p(class="media-body pb-3 mb-0 small lh-125")
+                        a(href=friend.from.url)= friend.from.fullName
+                        br
+                        Donec= friend.from.bio
+                    
+    
     if errors
         ul
             for error in errors
