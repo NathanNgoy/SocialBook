@@ -73,7 +73,7 @@ exports.get_profile = function(req, res){
             User.findById(req.params.id).exec(callback);
         },
         postsOfUser: function(callback){
-            Post.find({ "author": req.params.id}).populate('author').exec(callback);
+            Post.find({ "author": req.params.id}).populate('author').sort({"date":-1}).exec(callback);
         }
     }, function (err, results) {
         if(err) {

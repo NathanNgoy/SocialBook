@@ -36,12 +36,20 @@ block content
                             div 
                                 label(for='friend') Send a friend request:
                             button(type='submit' formaction='/users/'+ user._id +'/friendrequest/' + currentUser._id) add Friend
-            
+    else 
+        div(class="col-sm-12")
+            div(class="bar d-flex align-items-center p-3 my-3 text-white-50 bg-dark rounded shadow-sm")
+                div(class="col-sm-1")
+                    img(class=" profile" src="/images/profile.jpg" alt="", width="50", height="50")
+                div(class="lh-100 col-sm-8")
+                    h6(class="text-white lh-100")= user.fullName
+                    small= user.bio 
     br
 
-                
-    if currentUser._id.equals(user._id)
-        p Your Posts:
+
+    if currentUser
+        if currentUser._id.equals(user._id)
+            p Your Posts:
     else
         p #{user.fullName}'s Posts
 
@@ -52,9 +60,10 @@ block content
                 p(class="media-body pb-3 mb-0 small lh-125")
                     a(href= post.author.url class="strong d-block text-gray-dark")= post.author.fullName
                     Donec= post.dateFormat
-                if post.author._id.equals(currentUser._id)
-                    small(class="d-block text-right mt-3")
-                        a(href= post.url+"/delete") Delete post
+                if currentUser 
+                    if post.author._id.equals(currentUser._id)
+                        small(class="d-block text-right mt-3")
+                            a(href= post.url+"/delete") Delete post
 
             br        
             h6(class="pb-2 mb-0")= post.content

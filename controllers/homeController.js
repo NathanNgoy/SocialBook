@@ -12,7 +12,7 @@ exports.get_redirect = function(req, res) {
 exports.get_post_list = function(req, res) {
     async.parallel({
         post_count: function(callback){
-            Post.find({}, callback).populate("author");
+            Post.find({}).populate("author").sort({"date":-1}).exec(callback);
         },
     }, function(err, results) {
         res.render('home', { error: err, all_posts: results.post_count, currentUser: req.user });
