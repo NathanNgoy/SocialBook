@@ -4,20 +4,24 @@ block content
 
     if currentUser
         br
-        <main role="main" class="container">
-            div(class="bar d-flex align-items-center p-3 my-3 text-white-50 bg-dark rounded shadow-sm")
-                img(class="mr-3 profile" src="/images/profile.jpg" alt="", width="50", height="50")
-                div(class="lh-100")
-                    h6(class="mb-0 text-white lh-100")= currentUser.fullName
-                    small= currentUser.bio
-
-        form(method="POST", action="/posts" id="status")
-            div 
-                label(for='postContent') Write a post:
-                br
-                textarea(id="postbox", placeholder='What is on your mind' name='postContent' required='true')
-                br
-            button(type='submit' formaction='/posts') Post
+        div(class="col-sm-12 row")
+                div(class="col-sm-9 bar d-flex align-items-center p-3 my-3 text-white-50 bg-dark rounded shadow-sm")
+                    div(class="col-sm-2")
+                        img(class=" profile" src="/images/profile.jpg" alt="", width="50", height="50")
+                    div(class="lh-100 col-sm-3")
+                        h6(class="text-white lh-100")= currentUser.fullName
+                        small= currentUser.bio
+                div(class="col-sm-3  text-center")
+                    form(method="POST", action="/posts" id="status")
+                        div 
+                            label(for='postContent') Write a post:
+                            br
+                            textarea(id="postbox", placeholder='What is on your mind' name='postContent' required='true')
+                            br
+                        button(type='submit'  formaction='/posts') Post
+                    
+        br
+        p Posts:
 
         each post in all_posts
             div(class="my-3 p-3 bg-white rounded shadow-sm")
@@ -27,6 +31,10 @@ block content
                         a(href= post.author.url class=" strong d-block text-gray-dark")= post.author.fullName
                         Donec= post.dateFormat
 
+                    if post.author._id.equals(currentUser._id)
+                        small(class="d-block text-right mt-3")
+                            a(href= post.url+"/delete") Delete post
+
                 br        
                 h6(class="pb-2 mb-0")= post.content
 
@@ -34,9 +42,10 @@ block content
                     a(href="#") Comment
             
     else
-        h2 You're not login yet.
-        a(href='/login') Login
-
+        br
+        br
+        br
+        h3(style="text-align:center" class="text-secondary") You're not login yet. #[a(href="/login") Login] to connect with your friends!
 
 
     if errors

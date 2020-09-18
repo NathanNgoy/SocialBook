@@ -34,3 +34,7 @@ textarea {
   border-radius: 50%;
   z-index: 1000;
 }
+
+.col-sm-12 {
+  white-space: nowrap !important;
+}

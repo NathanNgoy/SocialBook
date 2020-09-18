@@ -4,35 +4,47 @@ block content
 
     br
 
-    <main role="main" class="container">
-            div(class="bar d-flex align-items-center p-3 my-3 text-white-50 bg-dark rounded shadow-sm")
-                img(class="mr-3 profile" src="/images/profile.jpg" alt="", width="50", height="50")
-                div(class="lh-100")
-                    h6(class="mb-0 text-white lh-100")= user.fullName
-                    small= user.bio
-
-    if currentUser
+    if currentUser    
         if currentUser._id.equals(user._id)
-            form(method="POST", action="/posts" id="status")
-                div 
-                    label(for='postContent') Write a post:
-                    br
-                    textarea(id="postbox", placeholder='What is on your mind' name='postContent' required='true')
-                    br
-                button(type='submit' formaction='/posts') Post
+        
+            div(class="col-sm-12 row")
+                div(class="col-sm-9 bar d-flex align-items-center p-3 my-3 text-white-50 bg-dark rounded shadow-sm")
+                    div(class="col-sm-2")
+                        img(class=" profile" src="/images/profile.jpg" alt="", width="50", height="50")
+                    div(class="lh-100 col-sm-3")
+                        h6(class="text-white lh-100")= user.fullName
+                        small= user.bio
+                div(class="col-sm-3  text-center")
+                    form(method="POST", action="/posts" id="status")
+                        div 
+                            label(for='postContent') Write a post:
+                            br
+                            textarea(id="postbox", placeholder='What is on your mind' name='postContent' required='true')
+                            br
+                        button(type='submit' formaction='/posts') Post
+
         else
-            form(method="POST", action='/users/'+ user._id +'/friendrequest/' + currentUser._id id="status")
-                div 
-                    label(for='friend') Send a friend request:
-                button(type='submit' formaction='/users/'+ user._id +'/friendrequest/' + currentUser._id) add Friend
+            div(class="col-sm-12")
+                div(class="bar d-flex align-items-center p-3 my-3 text-white-50 bg-dark rounded shadow-sm")
+                    div(class="col-sm-1")
+                        img(class=" profile" src="/images/profile.jpg" alt="", width="50", height="50")
+                    div(class="lh-100 col-sm-8")
+                        h6(class="text-white lh-100")= user.fullName
+                        small= user.bio
+                    div(class="col-sm-3")
+                        form(method="POST", action='/users/'+ user._id +'/friendrequest/' + currentUser._id id="status")
+                            div 
+                                label(for='friend') Send a friend request:
+                            button(type='submit' formaction='/users/'+ user._id +'/friendrequest/' + currentUser._id) add Friend
+            
+    br
 
+                
+    if currentUser._id.equals(user._id)
+        p Your Posts:
+    else
+        p #{user.fullName}'s Posts
 
-    <h2 class="mt-4">Two columns with two nested columns</h2>
-    <p>Per the documentation, nesting is easy—just put a row of columns within an existing column. This gives you two columns <strong>starting at desktops and scaling to large desktops</strong>, with another two (equal widths) within the larger column.</p>
-    <p>At mobile device sizes, tablets and down, these columns and their nested columns will stack.</p>
-    
-
-    p Posts:
     for post in postsOfUser
         div(class="my-3 p-3 bg-white rounded shadow-sm")
             div(class="media text-muted pt-3 border-bottom border-gray")
@@ -40,8 +52,9 @@ block content
                 p(class="media-body pb-3 mb-0 small lh-125")
                     a(href= post.author.url class="strong d-block text-gray-dark")= post.author.fullName
                     Donec= post.dateFormat
-                small(class="d-block text-right mt-3")
-                    a(href= post.url+"/delete") Delete post
+                if post.author._id.equals(currentUser._id)
+                    small(class="d-block text-right mt-3")
+                        a(href= post.url+"/delete") Delete post
 
             br        
             h6(class="pb-2 mb-0")= post.content
@@ -49,17 +62,3 @@ block content
             small(class="d-block text-right mt-3")
                 a(href="#") Comment
             
-
-
-    div(class="row mb-3")
-        <div class="col-md-8 themed-grid-col"> .col-md-8
-            <div class="pb-3">
-                .col-md-8
-            </div>
-            <div class="row">
-                <div class="col-md-6 themed-grid-col">.col-md-6</div>
-                <div class="col-md-6 themed-grid-col">.col-md-6</div>
-            </div>
-        </div>
-        <div class="col-md-4 themed-grid-col">.col-md-4</div>
-    </div>

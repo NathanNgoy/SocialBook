@@ -26,7 +26,8 @@ exports.search_list = function(req, res){
         }
     }, function(err, results) {
         console.log(results);
-        res.render('search_list', {error: err, search_list: results.search_lists})
+
+        res.render('search_list', {error: err, search_list: results.search_lists, currentUser: req.user})
     })
 }
 
