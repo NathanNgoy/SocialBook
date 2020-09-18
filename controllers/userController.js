@@ -6,6 +6,7 @@ const { insertMany } = require("../models/user");
 const passport = require("passport");
 const Post = require("../models/post");
 const friendRequest = require("..//models/friendrequest");
+var isFriend = false;
 
 exports.sign_up_get = function(req, res) {
     res.render("signup", { title: "Sign up"});
@@ -67,6 +68,7 @@ exports.logout_get = function(req, res){
     res.redirect("/login");
 }
 
+//Get user profile
 exports.get_profile = function(req, res){
     async.parallel({
         user: function(callback){
@@ -75,14 +77,32 @@ exports.get_profile = function(req, res){
         postsOfUser: function(callback){
             Post.find({ "author": req.params.id}).populate('author').sort({"date":-1}).exec(callback);
         }
+        
     }, function (err, results) {
         if(err) {
             return next(err);
         }
-        res.render("profile", { user: results.user, postsOfUser: results.postsOfUser, currentUser: req.user})
+        
+        isFriend = false;
+        if(req.user){
+
+            // Go through friend array to check if user is friend with this person
+            results.user.friends.forEach((friend) => {
+                if(friend.equals(req.user._id)){
+                    isFriend = true;
+                }
+            });
+
+            // Can't add yourself
+            if(req.user._id == req.params.id){
+                isFriend = true;
+            }
+        }
+        res.render("profile", { user: results.user, postsOfUser: results.postsOfUser, currentUser: req.user, isfriend: isFriend})
     })
 }
 
+//Create a friend request in DB
 exports.friendrequest_post = function(req, res, next){
     async.parallel({
         reciever: function(callback){
@@ -106,6 +126,7 @@ exports.friendrequest_post = function(req, res, next){
 }
 
 //id1 - sender, id2 - reciever
+//If accept, change status pending to status accept in DB
 exports.friendrequest_accept = function(req, res, next){
     friendRequest.findOneAndUpdate({"status": "Pending", "from": req.params.id1, "to": req.params.id2}, {"status": "Accepted"}
     ).then((frreq) => {
@@ -121,6 +142,7 @@ exports.friendrequest_accept = function(req, res, next){
     res.redirect("/users/" + req.params.id2 + "/friends")
 }
 
+//If reject, delete from DB
 exports.friendrequest_decline = function(req, res, next){
     friendRequest.findOneAndDelete({"status": "Pending", "from": req.params.id1, "to": req.params.id2})
         .then((declinedReq) => {

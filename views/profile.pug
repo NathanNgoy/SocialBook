@@ -31,11 +31,16 @@ block content
                     div(class="lh-100 col-sm-8")
                         h6(class="text-white lh-100")= user.fullName
                         small= user.bio
-                    div(class="col-sm-3")
-                        form(method="POST", action='/users/'+ user._id +'/friendrequest/' + currentUser._id id="status")
-                            div 
-                                label(for='friend') Send a friend request:
-                            button(type='submit' formaction='/users/'+ user._id +'/friendrequest/' + currentUser._id) add Friend
+                    
+                    if !isfriend
+                        div(class="col-sm-3")
+                            form(method="POST", action='/users/'+ user._id +'/friendrequest/' + currentUser._id id="status")
+                                div 
+                                    label(for='friend') Send a friend request:
+                                button(type='submit' formaction='/users/'+ user._id +'/friendrequest/' + currentUser._id) add Friend
+                    else
+                        div(class="col-sm-2")
+                            h7(class="text-white") You're friends!
     else 
         div(class="col-sm-12")
             div(class="bar d-flex align-items-center p-3 my-3 text-white-50 bg-dark rounded shadow-sm")
