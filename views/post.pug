@@ -1,0 +1,48 @@
+extends layout
+
+block content
+    if currentUser
+        div(class="my-3 p-3 bg-white rounded shadow-sm")
+            div(class="media text-muted pt-3 border-bottom border-gray")
+                img(class="bd-placeholder-img mr-2 rounded" width="32" height="32" src="/images/profile.jpg")
+                p(class="media-body pb-3 mb-0 small lh-125")
+                    a(href= post.author.url class=" strong d-block text-gray-dark")= post.author.fullName
+                    Donec= post.dateFormat
+
+                if post.author._id.equals(currentUser._id)
+                    small(class="d-block text-right mt-3")
+                        a(href= post.url+"/delete") Delete post
+
+            br        
+            h6(class="pb-2 mb-0")= post.content
+
+            small(class="d-block text-right mt-3")
+                a(href="#") Comments
+
+            for comment in comments
+                div(class="my-3 p-3 bg-white rounded shadow-sm")
+                    div(class="media text-muted pt-3 border-bottom border-gray")
+                        img(class="bd-placeholder-img mr-2 rounded" width="32" height="32" src="/images/profile.jpg")
+                        p(class="media-body pb-3 mb-0 small lh-125")
+                            a(href= comment.author.url class=" strong d-block text-gray-dark")= comment.author.fullName
+                            Donec= comment.content
+
+                        if comment.author._id.equals(currentUser._id)
+                            small(class="d-block text-right mt-3")
+                                a(href= "#") Delete Comment
+
+
+        div(class="col-sm-3  text-center")
+            form(method="POST", action="/comments/"+post._id id="status")
+                div 
+                    label(for='postContent') Write a Comment:
+                    br
+                    textarea(id="postbox", placeholder='What is on your mind' name='commentContent' required='true')
+                    br
+                button(type='submit'  formaction='/comments/'+post._id) Post
+    
+    else
+        br
+        br
+        br
+        h3(style="text-align:center" class="text-secondary") You're not login yet. #[a(href="/login") Login] to connect with your friends!

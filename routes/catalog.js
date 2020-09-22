@@ -51,4 +51,9 @@ router.post('/users/:id1/friendrequest/:id2/decline', user_controller.friendrequ
 
 router.get('/users/:id/friends', home_controller.get_friend_list);
 
+router.get('/posts/:id', post_controller.get_post);
+
+// comments
+router.post('/comments/:id', post_controller.post_create_comment);
+
 module.exports = router;

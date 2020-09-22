@@ -40,7 +40,6 @@ exports.get_friend_list = function(req, res){
             friendRequest.find({"status": "Accepted", "to": req.params.id}).populate('from').exec(callback);
         }
     }, function(err, results) {
-        console.log(results);
         res.render("friend", {
             currentUser: req.user, 
             error: err, 
