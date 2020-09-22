@@ -43,7 +43,7 @@ exports.get_post = function(req, res, next){
             Post.findById(req.params.id).populate("author").exec(callback);
         },
         comment_list: function(callback){
-            Comment.find({"postID": req.params.id}).populate("author").exec(callback);
+            Comment.find({"postID": req.params.id}).populate("author").sort({"date":-1}).exec(callback);
         }
     }, function(err, results) {
         console.log(results.post_profile);
@@ -54,6 +54,7 @@ exports.get_post = function(req, res, next){
 
 // POST delete
 exports.post_delete_post = function (req, res, next){
+    console.log(req.params.id);
     Post.findById(req.params.id).exec(function(err, message) {
         if (err) { return next(err); }
         Post.findByIdAndRemove(req.params.id, function deleteMessage(err) {
@@ -95,3 +96,14 @@ exports.post_create_comment = [
         }
     }
 ];
+
+exports.post_delete_comment = function (req, res, next) {
+    console.log(req.params.id);
+    Comment.findById(req.params.id).exec(function(err, message) {
+        if (err) { return next(err); }
+        Comment.findByIdAndRemove(req.params.id, function deleteComment(err){
+            if (err) { return next(err); }
+            res.redirect('/home');
+        })
+    })
+}

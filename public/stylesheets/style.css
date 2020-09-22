@@ -30,6 +30,11 @@ textarea {
 	width: 100%;
 }
 
+#commentbox {
+  height: 60px;
+	width: 100%;
+}
+
 .profile {
   border-radius: 50%;
   z-index: 1000;
@@ -37,4 +42,9 @@ textarea {
 
 .col-sm-12 {
   white-space: nowrap !important;
+}
+
+#comment_info {
+  display:flex;
+  justify-content: space-between;
 }

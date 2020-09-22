@@ -53,7 +53,9 @@ router.get('/users/:id/friends', home_controller.get_friend_list);
 
 router.get('/posts/:id', post_controller.get_post);
 
-// comments
+// comments (id is post id)
 router.post('/comments/:id', post_controller.post_create_comment);
+
+router.post('/comments/:id/delete', post_controller.post_delete_comment);
 
 module.exports = router;
