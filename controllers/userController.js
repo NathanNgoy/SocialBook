@@ -108,6 +108,7 @@ exports.get_profile = function(req, res, next){
 
 //Create a friend request in DB
 exports.friendrequest_post = function(req, res, next){
+    console.log(req.body.urltoredirect);
     async.parallel({
         reciever: function(callback){
             User.findById(req.params.id1).exec(callback);
@@ -124,7 +125,7 @@ exports.friendrequest_post = function(req, res, next){
         }).save((err) => {
             if(err) return next(err);
         })
-        return res.redirect("/users/" + req.params.id1);
+        return res.redirect(req.body.urltoredirect);
     })
     
 }
