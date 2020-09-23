@@ -101,10 +101,11 @@ exports.post_delete_post = function (req, res, next){
     console.log(req.params.id);
     Post.findById(req.params.id).exec(function(err, message) {
         if (err) { return next(err); }
-        Post.findByIdAndRemove(req.params.id, function deleteMessage(err) {
-            if (err) { return next(err); }
-            res.redirect("/home");
-        })
+        Comment.deleteMany({"postID": req.params.id}).then(
+            Post.findByIdAndRemove(req.params.id, function deleteMessage(err) {
+                if (err) { return next(err); }
+                res.redirect("/home");
+            }))
     })
 }
 
