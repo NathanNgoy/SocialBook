@@ -46,6 +46,9 @@ router.get('/', home_controller.get_redirect);
 // get list of friend
 router.get('/users/:id/friends', home_controller.get_friend_list);
 
+// add like
+router.post('/addlike', post_controller.add_like);
+
 
             /// PROFILE PAGE ///
 

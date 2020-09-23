@@ -48,3 +48,31 @@ textarea {
   display:flex;
   justify-content: space-between;
 }
+
+.inline {
+  display: inline;
+}
+
+.link-button {
+  background: none;
+  border: none;
+  color: grey;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 1em;
+  font-family: serif;
+}
+.link-button:focus {
+  outline: none;
+}
+.link-button:active {
+  color:red;
+}
+
+.likes {
+  font-size: 14px;
+}
+
+.comments {
+  font-size: 12px;
+}

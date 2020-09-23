@@ -38,16 +38,25 @@ block content
                             button(type="submit" class="btn btn-light btn-sm") Delete Post
 
                 br        
-                h6(class="pb-2 mb-0")= post.content
+                h6(class="pb-2 mb-0 col-sm-2")=  post.content
+                br
+                div(class="border-bottom")
+                br
 
-                small(class="d-block text-right mt-3")
-                    a(href= post.url) Comment
+                div(class="d-flex justify-content-between")
+                    form(method='POST' action="/addlike" class="inline")
+                        input(type="hidden" name="postID" value=post._id)
+                        button(type="submit" formaction="/addlike" name="urltoredirect" value="/home" class="link-button likes")= post.likes + " likes"
 
-                p Comments:
+                    small(class="d-block")
+                        a(href= post.url) Leave comment
+
+                
+                // p(class="comments") Comments:
 
                 for comment in comments
                     if post._id.equals(comment.postID)
-                        div(class="my-3 p-3 bg-white rounded shadow-sm col-sm-10")
+                        div(class="my-3 p-3 bg-white rounded shadow-sm col-sm-10 p-y-2")
                             div(class="media text-muted pt-3 border-gray grid")
 
                                 img(class="bd-placeholder-img mr-2 rounded" width="32" height="32" src="/images/profile.jpg")

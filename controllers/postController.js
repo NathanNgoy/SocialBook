@@ -98,7 +98,6 @@ exports.get_post = function(req, res, next){
 
 // POST delete
 exports.post_delete_post = function (req, res, next){
-    console.log(req.params.id);
     Post.findById(req.params.id).exec(function(err, message) {
         if (err) { return next(err); }
         Comment.deleteMany({"postID": req.params.id}).then(
@@ -110,6 +109,13 @@ exports.post_delete_post = function (req, res, next){
 }
 
 // POST like
+exports.add_like = function (req, res, next){
+    Post.findByIdAndUpdate(req.body.postID, {$inc: {likes: 1}}, (err, doc) => {
+        if(err) return next(err);
+        if(!doc) return res.sendStatus(404);
+        res.redirect(req.body.urltoredirect);
+    })
+}
 
 // POST comment create
 exports.post_create_comment = [

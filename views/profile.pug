@@ -75,12 +75,20 @@ block content
                             button(type="submit" class="btn btn-light btn-sm") Delete Post
 
             br        
-            h6(class="pb-2 mb-0")= post.content
+            h6(class="pb-2 mb-0 col-sm-2")=  post.content
+            br
+            div(class="border-bottom")
+            br
 
-            small(class="d-block text-right mt-3")
-                a(href=post.url) Comment
+            div(class="d-flex justify-content-between")
+                form(method='POST' action="/addlike" class="inline")
+                    input(type="hidden" name="postID" value=post._id)
+                    button(type="submit" formaction="/addlike" name="urltoredirect" value=user.url class="link-button likes")= post.likes + " likes"
+
+                small(class="d-block")
+                    a(href= post.url) Leave comment
             
-            p Comments:
+            // p Comments:
 
             for comment in comments
                 if post._id.equals(comment.postID)
