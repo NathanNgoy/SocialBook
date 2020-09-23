@@ -55,11 +55,13 @@ block content
     if currentUser
         if currentUser._id.equals(user._id)
             p Your Posts:
+        else
+            p #{user.fullName}'s Posts
     else
         p #{user.fullName}'s Posts
 
     for post in postsOfUser
-        div(class="my-3 p-3 bg-white rounded shadow-sm")
+        div(class="my-3 p-3 bg-light rounded shadow-sm")
             div(class="media text-muted pt-3 border-bottom border-gray")
                 img(class="bd-placeholder-img mr-2 rounded" width="32" height="32" src="/images/profile.jpg")
                 p(class="media-body pb-3 mb-0 small lh-125")

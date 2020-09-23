@@ -69,7 +69,7 @@ exports.logout_get = function(req, res){
 }
 
 //Get user profile
-exports.get_profile = function(req, res){
+exports.get_profile = function(req, res, next){
     async.parallel({
         user: function(callback){
             User.findById(req.params.id).exec(callback);
@@ -120,7 +120,7 @@ exports.friendrequest_post = function(req, res, next){
         }).save((err) => {
             if(err) return next(err);
         })
-        return res.redirect("/home");
+        return res.redirect("/users/" + req.params.id1);
     })
     
 }

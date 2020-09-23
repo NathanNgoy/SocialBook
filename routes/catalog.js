@@ -6,17 +6,7 @@ var user_controller = require('../controllers/userController');
 var post_controller = require('../controllers/postController');
 var home_controller = require('../controllers/homeController');
 
-/// BLOG ROUTERS ///
-
-//router.get('/', blog_controller.index);
-
-//router.get('/home', blog_controller.list_blog);
-
-//router.get('/message/create', blog_controller.message_create_get);
-
-//router.post('/message/create', blog_controller.messsage_create_post);
-
-/// USER ROUTERS ///
+            /// USER ROUTERS ///
 
 router.get('/signup', user_controller.sign_up_get);
 
@@ -30,32 +20,49 @@ router.get('/logout', user_controller.logout_get);
 
 router.get('/users/:id', user_controller.get_profile);
 
-// home page //
+                ///  HOME PAGE ///
 
+// Get a list of all the posts for the homepage timeline
 router.get('/home', home_controller.get_post_list);
 
+// Create a status post
 router.post('/posts', post_controller.post_create_post);
 
+// Delete a post
 router.post('/posts/:id/delete', post_controller.post_delete_post);
 
+// Search for friend using first name
 router.post('/search', home_controller.search_list);
 
+// redirect to home page
 router.get('/', home_controller.get_redirect);
 
+// get list of friend
+router.get('/users/:id/friends', home_controller.get_friend_list);
+
+
+            /// PROFILE PAGE ///
+
+// Send a friend request
 router.post('/users/:id1/friendrequest/:id2', user_controller.friendrequest_post);
 
 //id1 -> sender, id2 -> reciever
 router.post('/users/:id1/friendrequest/:id2/accept', user_controller.friendrequest_accept);
 
+// decline a friend request
 router.post('/users/:id1/friendrequest/:id2/decline', user_controller.friendrequest_decline);
 
-router.get('/users/:id/friends', home_controller.get_friend_list);
-
+// get specific post to leave comment
 router.get('/posts/:id', post_controller.get_post);
 
-// comments (id is post id)
+// create a new comment (id is post id)
 router.post('/comments/:id', post_controller.post_create_comment);
 
+// delete a comment 
 router.post('/comments/:id/delete', post_controller.post_delete_comment);
+
+            // find new friends page //
+
+router.get('/findfriends', home_controller.get_user_list);
 
 module.exports = router;

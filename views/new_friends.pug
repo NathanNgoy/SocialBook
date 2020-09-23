@@ -1,0 +1,38 @@
+extends layout
+
+block content
+    - var notFriend = true
+    if currentUser
+        for user in users 
+            - notFriend = true
+
+            if !currentUser._id.equals(user._id)
+                for friend in currentUser.friends
+                    if user._id.equals(friend._id)
+                        - notFriend = false
+
+                if notFriend
+                    div(class="my-3 p-3 bg-light rounded shadow-sm")
+                        div(class="media text-muted pt-3 border-gray")
+                            img(class="bd-placeholder-img mr-2 rounded" width="50" height="50" src="/images/profile.jpg")
+                            p(class="media-body pb-3 mb-0 small lh-125")
+                                a(href=user.url)= user.fullName
+                                br
+                                Donec= user.bio
+
+                                div(class="col-sm-3")
+                                form(method="POST", action='/users/'+ user._id +'/friendrequest/' + currentUser._id id="status")
+                                    div 
+                                        label(for='friend') Send a friend request:
+                                    button(type='submit' formaction='/users/'+ user._id +'/friendrequest/' + currentUser._id) add Friend
+
+    else
+        br
+        br
+        br
+        h3(style="text-align:center" class="text-secondary") You're not login yet. #[a(href="/login") Login] to connect with your friends!
+
+    if errors
+        ul
+            for error in errors
+                li!= error.msg

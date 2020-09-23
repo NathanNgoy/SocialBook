@@ -9,6 +9,7 @@ exports.get_redirect = function(req, res) {
     res.redirect('/home');
 }
 
+// Get a list of all the posts for the homepage timeline
 exports.get_post_list = function(req, res) {
     async.parallel({
         post_count: function(callback){
@@ -19,6 +20,7 @@ exports.get_post_list = function(req, res) {
     });
 }
 
+// When user searches for someone in the searchbar
 exports.search_list = function(req, res){
     async.parallel({
         search_lists: function(callback){
@@ -31,6 +33,7 @@ exports.search_list = function(req, res){
     })
 }
 
+// Shows a list of friend requests and the users current friends
 exports.get_friend_list = function(req, res){
     async.parallel({
         friend_request_list: function(callback){
@@ -45,5 +48,18 @@ exports.get_friend_list = function(req, res){
             error: err, 
             friend_requests: results.friend_request_list, 
             friend_list: results.friend_lists});
+    })
+}
+
+// Shows a list of all users
+exports.get_user_list = function(req, res){
+    async.parallel({
+        user_list: function(callback){
+            User.find({}).populate('friends').exec(callback);
+        }
+    }, function(err, results) {
+        console.log(results);
+        
+        res.render('new_friends', {error: err, users: results.user_list, currentUser: req.user})
     })
 }
