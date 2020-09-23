@@ -1,5 +1,6 @@
 var User = require("../models/user");
 var Post = require("../models/post");
+var Comment = require("../models/comment")
 var friendRequest = require("../models/friendrequest");
 
 const expressValidator = require("express-validator");
@@ -15,8 +16,11 @@ exports.get_post_list = function(req, res) {
         post_count: function(callback){
             Post.find({}).populate("author").sort({"date":-1}).exec(callback);
         },
+        comment_list: function(callback){
+            Comment.find({}).populate("author").sort({"date":-1}).exec(callback);
+        }
     }, function(err, results) {
-        res.render('home', { error: err, all_posts: results.post_count, currentUser: req.user });
+        res.render('home', { error: err, all_posts: results.post_count, currentUser: req.user, comments: results.comment_list });
     });
 }
 

@@ -69,12 +69,29 @@ block content
                     Donec= post.dateFormat
                 if currentUser 
                     if post.author._id.equals(currentUser._id)
-                        small(class="d-block text-right mt-3")
-                            a(href= post.url+"/delete") Delete post
+                        div(class="d-block text-right mt-3")
+                            a(href=post.url+"/edit" class="btn btn-light btn-sm" role="button") Edit Post
+                        form(method="POST" class="d-block text-right mt-3" action=post.url+"/delete")
+                            button(type="submit" class="btn btn-light btn-sm") Delete Post
 
             br        
             h6(class="pb-2 mb-0")= post.content
 
             small(class="d-block text-right mt-3")
-                a(href="#") Comment
+                a(href=post.url) Comment
             
+            p Comments:
+
+            for comment in comments
+                if post._id.equals(comment.postID)
+                    div(class="my-3 p-3 bg-white rounded shadow-sm col-sm-10")
+                        div(class="media text-muted pt-3 border-gray grid")
+
+                            img(class="bd-placeholder-img mr-2 rounded" width="32" height="32" src="/images/profile.jpg")
+                            p(class="media-body pb-3 mb-0 small lh-125")
+                                a(href= comment.author.url class=" strong d-block text-gray-dark")= comment.author.fullName
+                                Donec= comment.content
+
+                            if comment.author._id.equals(currentUser._id)
+                                form(method="POST" class="d-block text-right mt-3" action="/comments/"+comment._id+"/delete")
+                                    button(type="submit" class="btn btn-light btn-sm") Delete

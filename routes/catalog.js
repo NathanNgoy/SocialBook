@@ -28,6 +28,12 @@ router.get('/home', home_controller.get_post_list);
 // Create a status post
 router.post('/posts', post_controller.post_create_post);
 
+// GET page to edit a post
+router.get('/posts/:id/edit', post_controller.get_post_edit);
+
+// POST request to edit post
+router.post('/posts/:id/edit', post_controller.post_post_edit);
+
 // Delete a post
 router.post('/posts/:id/delete', post_controller.post_delete_post);
 
@@ -61,7 +67,8 @@ router.post('/comments/:id', post_controller.post_create_comment);
 // delete a comment 
 router.post('/comments/:id/delete', post_controller.post_delete_comment);
 
-            // find new friends page //
+
+            // FIND NEW FRIEND PAGE //
 
 router.get('/findfriends', home_controller.get_user_list);
 

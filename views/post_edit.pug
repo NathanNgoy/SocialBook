@@ -1,0 +1,37 @@
+extends layout
+
+block content
+    if currentUser
+        br
+        h2(class="text-center text-secondary") EDIT POST
+        div(class="my-3 p-3 bg-white rounded shadow-sm")
+            div(class="media text-muted pt-3 border-bottom border-gray")
+                img(class="bd-placeholder-img mr-2 rounded" width="32" height="32" src="/images/profile.jpg")
+                p(class="media-body pb-3 mb-0 small lh-125")
+                    a(href= post.author.url class=" strong d-block text-gray-dark")= post.author.fullName
+                    Donec= post.dateFormat
+
+                if post.author._id.equals(currentUser._id)
+                    form(method="POST" class="d-block text-right mt-3" action=post.url+"/delete")
+                        button(type="submit" class="btn btn-light btn-sm") Delete Post
+
+            br        
+            h6(class="pb-2 mb-0")= post.content
+            
+            br
+            
+
+
+            form(method='POST', action='' class="form-signin" id="comment_form")
+                div(class="input-group col-sm-12")
+                    textarea(class="form-control col-sm-12", rows="3", placeholder="Edit your post:", name="postContent", required="true")
+                    div(class="col-sm-1")
+                        span(class="input-group-btn")
+                            button(class="btn btn-secondary" type="submit" formaction="/posts/" + post._id + "/edit") Edit Post
+                    
+
+    else
+        br
+        br
+        br
+        h3(style="text-align:center" class="text-secondary") You're not login yet. #[a(href="/login") Login] to connect with your friends!

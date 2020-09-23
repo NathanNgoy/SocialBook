@@ -6,6 +6,7 @@ const { insertMany } = require("../models/user");
 const passport = require("passport");
 const Post = require("../models/post");
 const friendRequest = require("..//models/friendrequest");
+const Comment = require("../models/comment")
 var isFriend = false;
 
 exports.sign_up_get = function(req, res) {
@@ -76,6 +77,9 @@ exports.get_profile = function(req, res, next){
         },
         postsOfUser: function(callback){
             Post.find({ "author": req.params.id}).populate('author').sort({"date":-1}).exec(callback);
+        },
+        comment_list: function(callback){
+            Comment.find({}).populate("author").sort({"date":-1}).exec(callback);
         }
         
     }, function (err, results) {
@@ -98,7 +102,7 @@ exports.get_profile = function(req, res, next){
                 isFriend = true;
             }
         }
-        res.render("profile", { user: results.user, postsOfUser: results.postsOfUser, currentUser: req.user, isfriend: isFriend})
+        res.render("profile", { user: results.user, postsOfUser: results.postsOfUser, currentUser: req.user, isfriend: isFriend, comments: results.comment_list})
     })
 }
 

@@ -10,8 +10,10 @@ block content
                     Donec= post.dateFormat
 
                 if post.author._id.equals(currentUser._id)
-                    small(class="d-block text-right mt-3")
-                        a(href= post.url+"/delete") Delete post
+                        div(class="d-block text-right mt-3")
+                            a(href=post.url+"/edit" class="btn btn-light btn-sm" role="button") Edit Post
+                        form(method="POST" class="d-block text-right mt-3" action=post.url+"/delete")
+                            button(type="submit" class="btn btn-light btn-sm") Delete Post
 
             br        
             h6(class="pb-2 mb-0")= post.content
