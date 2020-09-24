@@ -32,7 +32,10 @@ block content
                         h6(class="text-white lh-100")= user.fullName
                         small= user.bio
                     
-                    if !isfriend
+                    if pendingfriend
+                        div(class="col-sm-2")
+                            h7(class="text-white") Friend request is pending!
+                    else if !isfriend
                         div(class="col-sm-3")
                             form(method="POST", action='/users/'+ user._id +'/friendrequest/' + currentUser._id id="status")
                                 div 
@@ -41,6 +44,7 @@ block content
                     else
                         div(class="col-sm-2")
                             h7(class="text-white") You're friends!
+                            
     else 
         div(class="col-sm-12")
             div(class="bar d-flex align-items-center p-3 my-3 text-white-50 bg-dark rounded shadow-sm")

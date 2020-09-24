@@ -8,6 +8,7 @@ const Post = require("../models/post");
 const friendRequest = require("..//models/friendrequest");
 const Comment = require("../models/comment")
 var isFriend = false;
+var pendingFriend = false;
 
 exports.sign_up_get = function(req, res) {
     res.render("signup", { title: "Sign up"});
@@ -80,6 +81,9 @@ exports.get_profile = function(req, res, next){
         },
         comment_list: function(callback){
             Comment.find({}).populate("author").sort({"date":-1}).exec(callback);
+        },
+        pending_friendRequest: function(callback){
+            friendRequest.find({"status": "Pending"}).exec(callback);
         }
         
     }, function (err, results) {
@@ -88,6 +92,8 @@ exports.get_profile = function(req, res, next){
         }
         
         isFriend = false;
+
+        // refrence: req.user is the currentUser, results.user is the profile
         if(req.user){
 
             // Go through friend array to check if user is friend with this person
@@ -97,12 +103,17 @@ exports.get_profile = function(req, res, next){
                 }
             });
 
-            // Can't add yourself
-            if(req.user._id == req.params.id){
-                isFriend = true;
-            }
+            // Go through friendrequest array to check if there is a pending friend request between currentUser and user
+            results.pending_friendRequest.forEach((pending) => {
+                if (pending.from.equals(results.user._id) && pending.to.equals(req.user._id)) {
+                    pendingFriend = true;
+                } 
+                if (pending.from.equals(req.user._id) && pending.to.equals(results.user._id)){
+                    pendingFriend = true;
+                }
+            })
         }
-        res.render("profile", { user: results.user, postsOfUser: results.postsOfUser, currentUser: req.user, isfriend: isFriend, comments: results.comment_list})
+        res.render("profile", { user: results.user, postsOfUser: results.postsOfUser, currentUser: req.user, isfriend: isFriend, pendingfriend: pendingFriend, comments: results.comment_list})
     })
 }
 

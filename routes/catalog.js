@@ -49,7 +49,6 @@ router.get('/users/:id/friends', home_controller.get_friend_list);
 // add like
 router.post('/addlike', post_controller.add_like);
 
-
             /// PROFILE PAGE ///
 
 // Send a friend request
@@ -69,7 +68,6 @@ router.post('/comments/:id', post_controller.post_create_comment);
 
 // delete a comment 
 router.post('/comments/:id/delete', post_controller.post_delete_comment);
-
 
             // FIND NEW FRIEND PAGE //
 
