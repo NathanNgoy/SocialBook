@@ -10,7 +10,7 @@ block content
         for friend_request in friend_requests
             div(class="my-3 p-3 bg-white rounded shadow-sm")
                 div(class="media text-muted pt-3 border-gray")
-                    img(class="bd-placeholder-img mr-2 rounded" width="50" height="50" src="/images/profile.jpg")
+                    img(class="bd-placeholder-img mr-2 rounded" width="50" height="50" src="/images/profilepika.png")
                     p(class="media-body pb-3 mb-0 small lh-125")
                         a(href="/users/"+ friend_request.from._id)= friend_request.from.fullName
                         br
@@ -28,7 +28,7 @@ block content
         for friend in friend_list
             div(class="my-3 p-3 bg-white rounded shadow-sm")
                 div(class="media text-muted pt-3 border-gray")
-                    img(class="bd-placeholder-img mr-2 rounded" width="32" height="32" src="/images/profile.jpg")
+                    img(class="bd-placeholder-img mr-2 rounded" width="32" height="32" src="/images/profilepika.png")
                     p(class="media-body pb-3 mb-0 small lh-125")
                         a(href=friend.from.url)= friend.from.fullName
                         br

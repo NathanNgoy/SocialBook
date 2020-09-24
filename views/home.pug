@@ -7,7 +7,7 @@ block content
         div(class="col-sm-12 row")
                 div(class="col-sm-9 bar d-flex align-items-center p-3 my-3 text-white-50 bg-dark rounded shadow-sm")
                     div(class="col-sm-2")
-                        img(class=" profile" src="/images/profile.jpg" alt="", width="50", height="50")
+                        img(class=" profile" src="/images/profilepika.png" alt="", width="55", height="50")
                     div(class="lh-100 col-sm-3")
                         h6(class="text-white lh-100")= currentUser.fullName
                         small= currentUser.bio
@@ -23,10 +23,11 @@ block content
         br
         p Posts:
 
+        // Show all posts
         each post in all_posts
             div(class="my-3 p-3 bg-light rounded shadow-sm")
                 div(class="media text-muted pt-3 border-bottom border-gray")
-                    img(class="bd-placeholder-img mr-2 rounded" width="32" height="32" src="/images/profile.jpg")
+                    img(class="bd-placeholder-img mr-2 rounded" width="35" height="32" src="/images/profilepika.png")
                     p(class="media-body pb-3 mb-0 small lh-12")
                         a(href= post.author.url class=" strong d-block text-gray-dark")= post.author.fullName
                         Donec= post.dateFormat
@@ -59,7 +60,7 @@ block content
                         div(class="my-3 p-3 bg-white rounded shadow-sm col-sm-10 p-y-2")
                             div(class="media text-muted pt-3 border-gray grid")
 
-                                img(class="bd-placeholder-img mr-2 rounded" width="32" height="32" src="/images/profile.jpg")
+                                img(class="bd-placeholder-img mr-2 rounded" width="35" height="32" src="/images/profilepika.png")
                                 p(class="media-body pb-3 mb-0 small lh-125")
                                     a(href= comment.author.url class=" strong d-block text-gray-dark")= comment.author.fullName
                                     Donec= comment.content
