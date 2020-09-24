@@ -60,10 +60,13 @@ exports.get_user_list = function(req, res){
     async.parallel({
         user_list: function(callback){
             User.find({}).populate('friends').exec(callback);
+        },
+        friendrequest_pending: function(callback) {
+            friendRequest.find({"status": "Pending"}).exec(callback);
         }
     }, function(err, results) {
         console.log(results);
         
-        res.render('new_friends', {error: err, users: results.user_list, currentUser: req.user})
+        res.render('new_friends', {error: err, friendrequest_pending: results.friendrequest_pending, users: results.user_list, currentUser: req.user})
     })
 }

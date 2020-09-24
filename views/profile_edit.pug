@@ -1,47 +1,43 @@
 extends layout
 
 block content
-    br
-    br
-    h1(class="text-center text-muted")= title
-    br
-    br
+    if currentUser   
+        br
+        br
+        h1(class="text-center text-muted")= title
+        br
+        br
 
-    form(method="POST", action="" class="form-signin")
-        div(class= "form-group") 
-            label(for='first_name') First Name:
+        form(method="POST", action="" class="form-signin")
+            div(class= "form-group") 
+                label(for='first_name') First Name:
+                br
+                input(type='text', class="form-control" placeholder='First Name' name='first_name' required='true')
+                br
+            div(class= "form-group") 
+                label(for='last_name') Last Name:
+                br
+                input(type='text', class="form-control", placeholder='Last Name' name='last_name' required='true')
+                br
+            div(class= "form-group") 
+                label(for='email') Email (used to signin):
+                br
+                input(type='text', class="form-control", placeholder='email' name='email' required='true')
+                br
             br
-            input(type='text', class="form-control" placeholder='First Name' name='first_name' required='true')
+            div(class= "form-group") 
+                label(for='bio') Bio:
+                br
+                input(type='textarea', class="form-control", id="exampleFormControlTextarea1", rows="3", placeholder='bio' name='bio' required='false')
+                br
             br
-        div(class= "form-group") 
-            label(for='last_name') Last Name:
-            br
-            input(type='text', class="form-control", placeholder='Last Name' name='last_name' required='true')
-            br
-        div(class= "form-group") 
-            label(for='email') Email (used to signin):
-            br
-            input(type='text', class="form-control", placeholder='email' name='email' required='true')
-            br
-        div(class= "form-group") 
-            label(for='password') Password:
-            br
-            input(type='password', class="form-control", placeholder='Password' name='password' required='true')
-            br
-        div(class= "form-group") 
-            label(for='confirmPassword') Confirm Password:
-            br
-            input(type='password', class="form-control", placeholder='Confirm Password' name='confirmPassword' required='true')
-            br
+            div(class="col text-center")
+                button.btn.btn-primary(type='submit' name="userToEditId" value=currentUser._id) Edit Profile
+    else
         br
-        div(class= "form-group") 
-            label(for='bio') Bio:
-            br
-            input(type='textarea', class="form-control", id="exampleFormControlTextarea1", rows="3", placeholder='bio' name='bio' required='false')
-            br
         br
-        div(class="col text-center")
-            button.btn.btn-primary(type='submit') Sign Up
+        br
+        h3(style="text-align:center" class="text-secondary") You're not login yet. #[a(href="/login") Login] to connect with your friends!
 
     if errors
         ul

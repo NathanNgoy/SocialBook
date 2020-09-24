@@ -56,6 +56,53 @@ exports.sign_up_post = [
     }
 ];
 
+// GET Edit user profile
+exports.edit_profile_get = function(req, res) {
+    res.render("profile_edit", { title: "Edit your profile", currentUser: req.user});
+}
+
+
+// POST Edit user profile
+exports.edit_profile_post = [
+    expressValidator.body('first_name', 'First name must not be empty.').trim().isLength({ min: 1 }),
+    expressValidator.body('last_name', 'Last name must not be empty.').trim().isLength({ min: 1 }),
+    expressValidator.body('email', 'Email must not be empty.').trim().isLength({ min: 1 }),
+
+    // Sanitize fields (using wildcard).
+    expressValidator.sanitizeBody('*').escape(),
+
+    (req, res, next) => {
+        const errors = expressValidator.validationResult(req);
+        if (req.user) {
+            user = new User({
+                firstName: req.body.first_name,
+                lastName: req.body.last_name,
+                email: req.body.email,
+                bio: req.body.bio,
+
+                password: req.user.password,
+                friends: req.user.friends,
+                friendRequests: req.user.friendRequests,
+                posts: req.user.posts,
+                _id: req.user._id,
+              });
+        }
+
+        if (!errors.isEmpty()) {
+            req.flash('error', errors.array());
+            res.redirect('/editprofile');
+
+          } else {
+            User.findByIdAndUpdate(req.body.userToEditId, user, {}, function (err, updatedUser) {
+              if (err) {
+                return next(err);
+              }
+              res.redirect(updatedUser.url);
+            });
+          }
+    }
+];
+
 exports.login_get = function(req, res) {
     res.render("login", {title: "Login"});
 }

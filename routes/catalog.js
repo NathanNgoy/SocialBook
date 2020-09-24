@@ -49,6 +49,12 @@ router.get('/users/:id/friends', home_controller.get_friend_list);
 // add like
 router.post('/addlike', post_controller.add_like);
 
+// GET Edit profile
+router.get('/editprofile', user_controller.edit_profile_get);
+
+// POST Edit profile
+router.post('/editprofile', user_controller.edit_profile_post);
+
             /// PROFILE PAGE ///
 
 // Send a friend request

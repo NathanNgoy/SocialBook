@@ -1,10 +1,13 @@
 extends layout
 
 block content
+    - var requested = false
     - var notFriend = true
+
     if currentUser
         for user in users 
             - notFriend = true
+            - requested= false
 
             if !currentUser._id.equals(user._id)
                 for friend in currentUser.friends
@@ -20,11 +23,22 @@ block content
                                 br
                                 Donec= user.bio
 
-                                div(class="col-sm-3")
-                                form(method="POST", action='/users/'+ user._id +'/friendrequest/' + currentUser._id id="status")
-                                    div 
-                                        label(for='friend') Send a friend request:
-                                    button(type='submit' name="urltoredirect" value="/findfriends" formaction='/users/'+ user._id +'/friendrequest/' + currentUser._id) add Friend
+
+                                for request in friendrequest_pending
+                                    if request.to.equals(user._id)
+                                        - requested = true
+                                    else if request.from.equals(user._id)
+                                        - requested = true
+
+                                if requested
+                                    div(class="col-sm-3 text-center")
+                                        h7 Friend request is pending!
+                                else
+                                    div(class="col-sm-3")
+                                    form(method="POST", action='/users/'+ user._id +'/friendrequest/' + currentUser._id id="status")
+                                        div 
+                                            label(for='friend') Send a friend request:
+                                        button(type='submit' name="urltoredirect" value="/findfriends" formaction='/users/'+ user._id +'/friendrequest/' + currentUser._id) add Friend
 
     else
         br
