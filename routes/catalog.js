@@ -5,6 +5,7 @@ var router = express.Router();
 var user_controller = require('../controllers/userController');
 var post_controller = require('../controllers/postController');
 var home_controller = require('../controllers/homeController');
+var message_controller = require('../controllers/messageController');
 
             /// USER ROUTERS ///
 
@@ -78,5 +79,11 @@ router.post('/comments/:id/delete', post_controller.post_delete_comment);
             // FIND NEW FRIEND PAGE //
 
 router.get('/findfriends', home_controller.get_user_list);
+
+            // SOCKETIO //
+router.get('/messages', message_controller.get_message);
+
+router.post('/messages', message_controller.post_message);
+
 
 module.exports = router;

@@ -1,0 +1,60 @@
+extends layout
+
+block content
+    br
+    br
+    
+
+    div(class="container")
+        form(method='POST', action='' class="form-signin")
+            div(class= "form-label-group")
+                input(class="form-control" type='text' placeholder='message' id='message' required='true' )
+                input(id="user", value= currentUser, type="hidden")
+            br
+            div(class="col text-center")
+                button.btn.btn-primary(type='submit' formaction= "/messages") Post
+
+    if messages
+        for message in messages
+            p= message
+
+    ul(id="messages")
+
+    if messages
+        for message in messages
+            p= message
+    
+    script(src="/socket.io/socket.io.js")
+    script. 
+        $(function () {
+            var socket = io();
+            $('form').submit(function(e) {
+                e.preventDefault(); // prevents page reloading
+
+                var Message = {
+                    author: $('#user').val(),
+                    message: $('#message').val()
+                }
+
+                socket.emit('chat message', Message);
+                //sendMessage(message);
+
+                return false;
+            });
+
+            socket.on('chat message', function(msg){
+                $('#messages').append($('<li>').text(msg.author));
+                $('#messages').append($('<li>').text(msg.message));
+            });
+
+            function sendMessage(message){
+                $.post('http://localhost:3000/messages', message);
+            }
+        });
+ 
+        
+    
+    if errors
+        ul
+            for error in errors
+                li!= error.msg

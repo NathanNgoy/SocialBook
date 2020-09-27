@@ -17,6 +17,10 @@ var catalogRouter = require('./routes/catalog');  //Import routes for "catalog" 
 
 var app = express();
 
+//SocketIO
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
+
 //Set up mongoose connection
 var mongoose = require('mongoose');
 var mongoDB = process.env.MONGODB_URI;
@@ -77,9 +81,36 @@ passport.deserializeUser(function(id, done) {
 
 app.use('/', catalogRouter);
 
-// pass user object
+
+io.on("connection", (socket) => {
+  console.log("a user is connected");
+
+  socket.on('chat message', (msg) => {
+    io.emit('chat message', msg);
+  });
+
+  /*
+  socket.on("message", (msg) => {
+    console.log("recieve message");
+    io.emit("message", msg);
+  })
+
+  socket.on("sendmsg", (msg) => {
+    console.log(msg);
+  })
+  */
+
+  socket.on("disconnect", () => {
+    console.log("User disconnected");
+  })
+  
+})
+
+
+// pass user object and socket object
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
+  res.io = io;
   next();
 });
 
@@ -99,4 +130,4 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+module.exports = {app: app, server: server};
