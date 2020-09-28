@@ -8,8 +8,8 @@ block content
     div(class="container")
         form(method='POST', action='' class="form-signin")
             div(class= "form-label-group")
-                input(class="form-control" type='text' placeholder='message' id='message' required='true' )
-                input(id="user", value= currentUser, type="hidden")
+                input(class="form-control" type='text' placeholder='message' id='message' name='message' required='true' )
+                input(id="user", name='user' value= currentUser.fullName, type="hidden")
             br
             div(class="col text-center")
                 button.btn.btn-primary(type='submit' formaction= "/messages") Post
@@ -19,6 +19,8 @@ block content
             p= message
 
     ul(id="messages")
+
+    div(id="chatbox" class="my-3 p-3 bg-light rounded shadow-sm")
 
     if messages
         for message in messages
@@ -43,6 +45,20 @@ block content
             });
 
             socket.on('chat message', function(msg){
+
+                var innerDiv = document.createElement('div');
+                innerDiv.className = "media text-muted pt-3 border-gray";
+
+                img = $('<img/>', {src:"/images/profilepika.png", class: "bd-placeholder-img mr-2 rounded", width: 32, height: 32}).appendTo("#innerDiv");
+                var infoDiv = document.createElement('div');
+
+                infoDiv.insertAdjacentHTML('beforeend', msg.author);
+                infoDiv.insertAdjacentHTML('beforeend', msg.message);
+                
+                innerDiv.appendChild(infoDiv);
+                $('chatbox').appendChild(innerDiv);
+                            
+
                 $('#messages').append($('<li>').text(msg.author));
                 $('#messages').append($('<li>').text(msg.message));
             });

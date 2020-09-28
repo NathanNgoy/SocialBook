@@ -89,17 +89,6 @@ io.on("connection", (socket) => {
     io.emit('chat message', msg);
   });
 
-  /*
-  socket.on("message", (msg) => {
-    console.log("recieve message");
-    io.emit("message", msg);
-  })
-
-  socket.on("sendmsg", (msg) => {
-    console.log(msg);
-  })
-  */
-
   socket.on("disconnect", () => {
     console.log("User disconnected");
   })

@@ -81,9 +81,13 @@ router.post('/comments/:id/delete', post_controller.post_delete_comment);
 router.get('/findfriends', home_controller.get_user_list);
 
             // SOCKETIO //
-router.get('/messages', message_controller.get_message);
+router.get('/message', message_controller.message_list);
 
-router.post('/messages', message_controller.post_message);
+router.get('/messagetbd', message_controller.message_tbd);
+
+router.get('/message/:id', message_controller.get_message);
+
+router.post('/message', message_controller.post_message);
 
 
 module.exports = router;

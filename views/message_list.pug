@@ -1,0 +1,48 @@
+extends layout
+
+block content
+    br
+    
+    if currentUser
+        div(class="my-3 p-3 bg-light rounded shadow-sm")
+            h6(class="border-bottom border-gray pb-2 mb-0") Message your friends!
+
+            for user in user_list
+                for friend_id in currentUser.friends
+                    if user._id.equals(friend_id)
+                        div(class="my-3 p-3 bg-white rounded shadow-sm")
+                            div(class="media text-muted pt-3 border-gray")
+                                img(class="bd-placeholder-img mr-2 rounded" width="35" height="32" src="/images/profilepika.png")
+                                p(class="media-body pb-3 mb-0 small lh-125")
+                                    a(href=user.url)= user.fullName
+                                    br
+                                    Donec= user.bio
+                                    div(class="col-sm-2")
+                                        button(onclick= `room(${user._id})`) click
+                                        a(href="/message/" + user._id class="btn btn-light btn-sm" role="button") Message
+    
+    else
+        br
+        br
+        br
+        h3(style="text-align:center" class="text-secondary") You're not login yet. #[a(href="/login") Login] to connect with your friends!
+      
+
+    if errors
+        ul
+            for error in errors
+                li!= error.msg
+
+
+    script(text="text/javascript").
+        function room(string1) {
+            // string 1 is before string 2
+            /*
+            if(string1.localeCompare(string2) === -1) {
+                console.log( string1 + string2);
+            } else {
+                console.log( string2 + string1);
+            }
+            */
+            console.log(string1);
+        }
