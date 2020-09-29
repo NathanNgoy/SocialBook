@@ -23,51 +23,52 @@ block content
         br
         p Posts:
 
-        // Show all posts
+        // Show all posts from friends
         each post in all_posts
-            div(class="my-3 p-3 bg-light rounded shadow-sm")
-                div(class="media text-muted pt-3 border-bottom border-gray")
-                    img(class="bd-placeholder-img mr-2 rounded" width="35" height="32" src="/images/profilepika.png")
-                    p(class="media-body pb-3 mb-0 small lh-12")
-                        a(href= post.author.url class=" strong d-block text-gray-dark")= post.author.fullName
-                        Donec= post.dateFormat
+            if post.author._id.equals(currentUser._id) || currentUser.friends.includes(post.author._id)
+                div(class="my-3 p-3 bg-light rounded shadow-sm")
+                    div(class="media text-muted pt-3 border-bottom border-gray")
+                        img(class="bd-placeholder-img mr-2 rounded" width="35" height="32" src="/images/profilepika.png")
+                        p(class="media-body pb-3 mb-0 small lh-12")
+                            a(href= post.author.url class=" strong d-block text-gray-dark")= post.author.fullName
+                            Donec= post.dateFormat
 
-                    if post.author._id.equals(currentUser._id)
-                        div(class="d-block text-right mt-3")
-                            a(href=post.url+"/edit" class="btn btn-light btn-sm" role="button") Edit Post
-                        form(method="POST" class="d-block text-right mt-3" action=post.url+"/delete")
-                            button(type="submit" class="btn btn-light btn-sm") Delete Post
+                        if post.author._id.equals(currentUser._id)
+                            div(class="d-block text-right mt-3")
+                                a(href=post.url+"/edit" class="btn btn-light btn-sm" role="button") Edit Post
+                            form(method="POST" class="d-block text-right mt-3" action=post.url+"/delete")
+                                button(type="submit" class="btn btn-light btn-sm") Delete Post
 
-                br        
-                h6(class="pb-2 mb-0 col-sm-2")=  post.content
-                br
-                div(class="border-bottom")
-                br
+                    br        
+                    h6(class="pb-2 mb-0 col-sm-2")=  post.content
+                    br
+                    div(class="border-bottom")
+                    br
 
-                div(class="d-flex justify-content-between")
-                    form(method='POST' action="/addlike" class="inline")
-                        input(type="hidden" name="postID" value=post._id)
-                        button(type="submit" formaction="/addlike" name="urltoredirect" value="/home" class="link-button likes")= post.likes + " likes"
+                    div(class="d-flex justify-content-between")
+                        form(method='POST' action="/addlike" class="inline")
+                            input(type="hidden" name="postID" value=post._id)
+                            button(type="submit" formaction="/addlike" name="urltoredirect" value="/home" class="link-button likes")= post.likes + " likes"
 
-                    small(class="d-block")
-                        a(href= post.url) Leave comment
+                        small(class="d-block")
+                            a(href= post.url) Leave comment
 
-                
-                // p(class="comments") Comments:
+                    
+                    // p(class="comments") Comments:
 
-                for comment in comments
-                    if post._id.equals(comment.postID)
-                        div(class="my-3 p-3 bg-white rounded shadow-sm col-sm-10 p-y-2")
-                            div(class="media text-muted pt-3 border-gray grid")
+                    for comment in comments
+                        if post._id.equals(comment.postID)
+                            div(class="my-3 p-3 bg-white rounded shadow-sm col-sm-10 p-y-2")
+                                div(class="media text-muted pt-3 border-gray grid")
 
-                                img(class="bd-placeholder-img mr-2 rounded" width="35" height="32" src="/images/profilepika.png")
-                                p(class="media-body pb-3 mb-0 small lh-125")
-                                    a(href= comment.author.url class=" strong d-block text-gray-dark")= comment.author.fullName
-                                    Donec= comment.content
+                                    img(class="bd-placeholder-img mr-2 rounded" width="35" height="32" src="/images/profilepika.png")
+                                    p(class="media-body pb-3 mb-0 small lh-125")
+                                        a(href= comment.author.url class=" strong d-block text-gray-dark")= comment.author.fullName
+                                        Donec= comment.content
 
-                                if comment.author._id.equals(currentUser._id)
-                                    form(method="POST" class="d-block text-right mt-3" action="/comments/"+comment._id+"/delete")
-                                        button(type="submit" class="btn btn-light btn-sm") Delete
+                                    if comment.author._id.equals(currentUser._id)
+                                        form(method="POST" class="d-block text-right mt-3" action="/comments/"+comment._id+"/delete")
+                                            button(type="submit" class="btn btn-light btn-sm") Delete
             
     else
         br

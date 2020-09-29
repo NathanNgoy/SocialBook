@@ -12,23 +12,23 @@ block content
             div(class= "form-group") 
                 label(for='first_name') First Name:
                 br
-                input(type='text', class="form-control" placeholder='First Name' name='first_name' required='true')
+                input(type='text', class="form-control" placeholder=currentUser.firstName name='first_name' required='true')
                 br
             div(class= "form-group") 
                 label(for='last_name') Last Name:
                 br
-                input(type='text', class="form-control", placeholder='Last Name' name='last_name' required='true')
+                input(type='text', class="form-control", placeholder=currentUser.lastName name='last_name' required='true')
                 br
             div(class= "form-group") 
                 label(for='email') Email (used to signin):
                 br
-                input(type='text', class="form-control", placeholder='email' name='email' required='true')
+                input(type='text', class="form-control", placeholder= currentUser.email name='email' required='true')
                 br
             br
             div(class= "form-group") 
                 label(for='bio') Bio:
                 br
-                input(type='textarea', class="form-control", id="exampleFormControlTextarea1", rows="3", placeholder='bio' name='bio' required='false')
+                input(type='textarea', class="form-control", id="exampleFormControlTextarea1", rows="3", placeholder=currentUser.bio name='bio' required='false')
                 br
             br
             div(class="col text-center")
