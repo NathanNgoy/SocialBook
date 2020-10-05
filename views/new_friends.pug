@@ -25,9 +25,9 @@ block content
 
 
                                 for request in friendrequest_pending
-                                    if request.to.equals(user._id)
+                                    if request.to.equals(user._id) && request.from.equals(currentUser._id)
                                         - requested = true
-                                    else if request.from.equals(user._id)
+                                    else if request.from.equals(user._id) && request.to.equals(currentUser._id)
                                         - requested = true
 
                                 if requested
